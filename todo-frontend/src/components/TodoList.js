@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 
 import AddTodo from "./AddTodo"
-import TodoItem from "./TodosItem"
+import TodoItem from "./TodoItem"
 import BACKEND_URL from "../config/config"
 
 const TodoList = ()=>{
@@ -22,6 +22,25 @@ const TodoList = ()=>{
     }
 
     const addTodo = async (title)=> {
+        console.log("Adding todo", title)
+        try {
+            const response = await fetch(`${BACKEND_URL}/add-todos`,{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({title})
+            })
+            console.log("Response is",response)
+            const newTodo = await response.json();
+            setTodos((prev)=>[...prev, newTodo])
+            console.log("Response received", response)
+        }catch (error) {
+            console.error("Error while creating the todo", error)
+        }
+    }
+
+    const deleteTodo = async (title)=> {
         console.log("Adding todo", title)
         try {
             const response = await fetch(`${BACKEND_URL}/add-todos`,{
