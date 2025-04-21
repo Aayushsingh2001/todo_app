@@ -1,6 +1,7 @@
 ---
 - name: Provision EC2 instance & install XX 
   hosts: localhost
+  gather_facts: false
   tasks:
     - name: Adding SSH access to a security group
       amazon.aws.ec2_group:
